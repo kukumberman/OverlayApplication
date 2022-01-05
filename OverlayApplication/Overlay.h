@@ -55,7 +55,7 @@ public:
         return m_Rect.height;
     }
 
-    bool IsValid()
+    bool IsTargetValid()
     {
         return m_IsValid;
     }

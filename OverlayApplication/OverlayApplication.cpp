@@ -297,7 +297,7 @@ void UpdateWindow()
 
 void Foo(OverlayApp* overlay)
 {
-    if (overlay->IsValid())
+    if (overlay->IsTargetValid())
     {
         overlay->Draw()->Circle(100, 100, 50);
 
