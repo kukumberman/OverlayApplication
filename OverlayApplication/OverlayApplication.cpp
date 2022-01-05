@@ -8,6 +8,9 @@
 #pragma comment(lib, "d3dx9.lib")
 #pragma comment(lib, "dwmapi.lib")
 
+#include "DrawingContext.h"
+#include "Overlay.h"
+
 int width = 800;
 int height = 600;
 int frameCount = 0;
@@ -292,6 +295,31 @@ void UpdateWindow()
     MoveWindow(hWnd, point.x, point.y, width, height, true);
 }
 
+void Foo(OverlayApp* overlay)
+{
+    if (overlay->IsValid())
+    {
+        overlay->Draw()->Circle(100, 100, 50);
+
+        overlay->Draw()->Line(0, 0, overlay->GetWidth(), overlay->GetHeight());
+        overlay->Draw()->Line(overlay->GetWidth(), 0, 0, overlay->GetHeight());
+    }
+    else
+    {
+        overlay->Draw()->Circle(overlay->GetWidth() * 0.5f, overlay->GetHeight() * 0.5f, 100);
+    }
+}
+
+void DankOverlay()
+{
+    OverlayApp overlay(L"Calculator");
+
+    overlay.Create();
+
+    overlay.AddCallback(Foo);
+    overlay.Run();
+}
+
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_opt_ HINSTANCE hPrevInstance,
                      _In_ LPWSTR    lpCmdLine,
@@ -300,6 +328,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     AllocConsole();
     FILE* f;
     freopen_s(&f, "CONOUT$", "w", stdout);
+
+    DankOverlay();
+
+    // end of the refactored code!!!
+
+    return 0;
 
     gameWindow = FindWindow(0, m_TargetWindowName);
 
