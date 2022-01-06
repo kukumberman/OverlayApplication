@@ -24,15 +24,24 @@ LRESULT CALLBACK Overlay::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
         pThis->OnCreate();*/
     }
     break;
+    case WM_SIZE:
+    {
+        std::cout << "Size changed" << std::endl;
+        if (overlay != nullptr)
+        {
+            std::cout << "Should resize spawnchain" << std::endl;
+            overlay->OnResize();
+        }
+    }
+    break;
     case WM_PAINT:
     {
         //std::cout << "Paint" << std::endl;
-
-        if (overlay != nullptr)
-        {
-            //std::cout << "overlay is ok" << std::endl;
-            overlay->Render();
-        }
+        //if (overlay != nullptr)
+        //{
+        //    //std::cout << "overlay is ok" << std::endl;
+        //    overlay->Render();
+        //}
     }
     break;
     case WM_DESTROY:

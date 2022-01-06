@@ -21,9 +21,26 @@ public:
 
 	}
 
-	void Text(LPCWSTR text, int x, int y)
+	void SetColor(D3DCOLOR color)
+	{
+		m_Color = color;
+	}
+
+	void Text(const wchar_t* text, int x, int y)
 	{
 		DeviceContext::DrawLabelW(m_Font, text, x, y, m_Color);
+	}
+
+	void Text(int x, int y, const wchar_t* format, ...)
+	{
+		wchar_t buffer[100];
+
+		va_list args;
+		va_start(args, format);
+		vswprintf_s(buffer, 100, format, args);
+		va_end(args);
+
+		Text(buffer, x, y);
 	}
 
 	void Line(int x1, int y1, int x2, int y2)

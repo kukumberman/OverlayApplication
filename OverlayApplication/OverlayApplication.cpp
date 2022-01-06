@@ -299,14 +299,25 @@ void Foo(OverlayApp* overlay)
 {
     if (overlay->IsTargetValid())
     {
+        overlay->Draw()->SetColor(D3DCOLOR_XRGB(255, 0, 0));
         overlay->Draw()->Circle(100, 100, 50);
 
-        overlay->Draw()->Line(0, 0, overlay->GetWidth(), overlay->GetHeight());
-        overlay->Draw()->Line(overlay->GetWidth(), 0, 0, overlay->GetHeight());
+        overlay->Draw()->SetColor(D3DCOLOR_XRGB(0, 0, 255));
+        overlay->Draw()->Line(0, 0, overlay->Width(), overlay->Height());
+        overlay->Draw()->Line(overlay->Width(), 0, 0, overlay->Height());
+        
+        /*wchar_t buffer[100];
+        swprintf_s(buffer, L"%d %.2f", overlay->FrameCount(), 1 / overlay->DeltaTime());
+        overlay->Draw()->Text(buffer, 100, 100);*/
+
+        overlay->Draw()->SetColor(D3DCOLOR_XRGB(0, 255, 0));
+        overlay->Draw()->Text(100, 200, L"%d %.2f", overlay->FrameCount(), 1 / overlay->DeltaTime());
     }
     else
     {
-        overlay->Draw()->Circle(overlay->GetWidth() * 0.5f, overlay->GetHeight() * 0.5f, 100);
+        overlay->Draw()->Text(100, 100, L"%d %d", overlay->Width(), overlay->Height());
+        overlay->Draw()->Line(0, 0, overlay->Width(), overlay->Height());
+        overlay->Draw()->Circle(overlay->Width() * 0.5f, overlay->Height() * 0.5f, 100);
     }
 }
 

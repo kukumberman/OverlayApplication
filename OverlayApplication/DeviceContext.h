@@ -68,6 +68,14 @@ public:
 		}
 	}
 
+	void OnResize(int width, int height)
+	{
+		// https://www.unknowncheats.me/forum/c-/128592-directx-scaling-issues.html
+		//todo
+		m_D3DParams.BackBufferWidth = width;
+		m_D3DParams.BackBufferHeight = height;
+	}
+
 	bool BeginRender()
 	{
 		if (m_D3DDevice == nullptr)
