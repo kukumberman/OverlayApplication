@@ -321,14 +321,34 @@ void Foo(OverlayApp* overlay)
     }
 }
 
+void Keyboard(OverlayApp* overlay)
+{
+    if (GetAsyncKeyState(VK_NUMPAD5) & 1)
+    {
+        std::cout << "VK_NUMPAD5" << std::endl;
+    }
+    else if (GetAsyncKeyState(VK_END) & 1)
+    {
+        std::cout << "VK_END" << std::endl;
+        overlay->Close();
+    }
+}
+
+OverlayApp* overlay = nullptr;
+
 void DankOverlay()
 {
-    OverlayApp overlay(L"Calculator");
+    overlay = new OverlayApp(L"Calculator");
 
-    overlay.Create();
+    overlay->Create();
+    overlay->AddCallback(Foo);
+    overlay->AddCallback(Keyboard);
 
-    overlay.AddCallback(Foo);
-    overlay.Run();
+    overlay->Run();
+
+    std::cout << "todo: cleanup" << std::endl;
+
+    system("pause");
 }
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
