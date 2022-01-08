@@ -10,6 +10,7 @@
 
 #include "DrawingContext.h"
 #include "Overlay.h"
+#include "Gradient.h"
 
 int width = 800;
 int height = 600;
@@ -336,6 +337,47 @@ void Keyboard(OverlayApp* overlay)
 
 OverlayApp* overlay = nullptr;
 
+#define ExtractAlpha(x) ((x>>24)&255)
+#define ExtractRed(x) ((x>>16)&255)
+#define ExtractGreen(x) ((x>>8)&255)
+#define ExtractBlue(x) (x&255)
+
+void GradientHandler()
+{
+    // https://www.gamedev.net/forums/topic/100657-grab-r-g-and-b-values-from-a-d3dcolor/
+
+    D3DCOLOR color = D3DCOLOR_RGBA(146, 10, 100, 128);
+
+    printf("%d %d %d %d\n", ExtractRed(color), ExtractGreen(color), ExtractBlue(color), ExtractAlpha(color));
+
+    std::vector<rgb> colors;
+
+    colors.push_back({ 255, 0, 0 }); // red
+    colors.push_back({ 255, 255, 0 }); // yellow
+    colors.push_back({ 0, 255, 0 }); // green
+    colors.push_back({ 0, 0, 255 }); // blue
+
+    Gradient g;
+    g.initialize(0, 1, colors, { 0, 0, 0 }, { 0, 0, 0 });
+
+    rgb result;
+
+    result = g.getRgb(0);
+    printf("%d %d %d\n", result.red, result.green, result.blue);
+
+    result = g.getRgb(1.f / 3);
+    printf("%d %d %d\n", result.red, result.green, result.blue);
+
+    result = g.getRgb(0.66);
+    printf("%d %d %d\n", result.red, result.green, result.blue);
+
+    result = g.getRgb(0.99);
+    printf("%d %d %d\n", result.red, result.green, result.blue);
+
+    result = g.getRgb(1);
+    printf("%d %d %d\n", result.red, result.green, result.blue);
+}
+
 void DankOverlay()
 {
     overlay = new OverlayApp(L"Calculator");
@@ -360,7 +402,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     FILE* f;
     freopen_s(&f, "CONOUT$", "w", stdout);
 
-    DankOverlay();
+    GradientHandler();
+
+    system("pause");
+
+    //DankOverlay();
 
     // end of the refactored code!!!
 
